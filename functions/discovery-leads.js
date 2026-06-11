@@ -3,27 +3,31 @@
  * Handles form submissions and stores leads in Supabase
  * 
  * Deploy: Automatically deployed to /api/discovery-leads when in /functions/
+ * Docs: https://developers.cloudflare.com/pages/functions/
  */
 
 export async function onRequest(context) {
     const request = context.request;
     const env = context.env;
 
-    // Only accept POST requests
-    if (request.method !== 'POST') {
-        return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-            status: 405,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
-
-    // Enable CORS
+    // Enable CORS for OPTIONS preflight
     if (request.method === 'OPTIONS') {
         return new Response(null, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type'
+            }
+        });
+    }
+
+    // Only accept POST requests
+    if (request.method !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method not allowed. Use POST.' }), {
+            status: 405,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             }
         });
     }
@@ -36,7 +40,10 @@ export async function onRequest(context) {
         if (!companyName || !companyUrl || !challenge || !teamSize || !budget || !email) {
             return new Response(JSON.stringify({ error: 'All fields are required' }), {
                 status: 400,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
 
@@ -45,7 +52,10 @@ export async function onRequest(context) {
         if (!emailRegex.test(email.trim())) {
             return new Response(JSON.stringify({ error: 'Invalid email format provided' }), {
                 status: 400,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
 
@@ -55,7 +65,10 @@ export async function onRequest(context) {
         } catch (_) {
             return new Response(JSON.stringify({ error: 'Invalid URL format provided. Must include http:// or https://' }), {
                 status: 400,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
 
@@ -67,7 +80,10 @@ export async function onRequest(context) {
             console.error('Missing Supabase environment variables');
             return new Response(JSON.stringify({ error: 'Server configuration error' }), {
                 status: 500,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
 
@@ -95,7 +111,10 @@ export async function onRequest(context) {
             console.error('Supabase error:', errorData);
             return new Response(JSON.stringify({ error: 'Failed to save lead' }), {
                 status: 500,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
 
@@ -117,7 +136,10 @@ export async function onRequest(context) {
         console.error('API error:', error);
         return new Response(JSON.stringify({ error: 'Internal server error' }), {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     }
 }

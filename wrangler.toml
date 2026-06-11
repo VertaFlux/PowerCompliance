@@ -1,0 +1,19 @@
+# Cloudflare Pages configuration
+# For Cloudflare Pages Functions
+
+name = "power-compliance"
+type = "javascript"
+
+# Environment variables for production
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+# Build configuration
+[build]
+command = "npm run build"
+destination = "dist"
+
+# Bindings and routes
+[[routes]]
+pattern = "/api/discovery-leads"
+zone_id = ""
