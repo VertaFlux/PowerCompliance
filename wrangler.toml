@@ -1,19 +1,32 @@
+name = "powercompliance"
+compatibility_date = "2026-06-18"
+
+# --- NEW WORKING FIXES ---
+[build]
+command = ""
+pages_build_output_dir = "."
+
+[vars]
+ENVIRONMENT = "production"
+
+
+
 # Cloudflare Pages configuration
 # For Cloudflare Pages Functions
 
-name = "power-compliance"
-type = "javascript"
+#name = "power-compliance"
+#type = "javascript"
 
 # Environment variables for production
-[env.production]
-vars = { ENVIRONMENT = "production" }
+#[env.production]
+#vars = { ENVIRONMENT = "production" }
 
 # Build configuration
-[build]
-command = "npm run build"
-destination = "dist"
+#[build]
+#command = "npm run build"
+#destination = "dist"
 
 # Bindings and routes
-[[routes]]
-pattern = "/api/discovery-leads"
-zone_id = ""
+#[[routes]]
+#pattern = "/api/discovery-leads"
+#zone_id = ""
