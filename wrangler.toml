@@ -1,13 +1,12 @@
 name = "powercompliance"
 compatibility_date = "2026-06-18"
 
-# --- NEW WORKING FIXES ---
-[build]
-command = ""
-pages_build_output_dir = "."
+[assets]
+directory = "."
 
 [vars]
 ENVIRONMENT = "production"
+
 
 
 
