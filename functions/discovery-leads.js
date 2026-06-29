@@ -60,20 +60,45 @@ export default {
                     });
                 }
 
-                // Insert into Supabase
-                const supabaseUrl = env.SUPABASE_URL;
-                const supabaseKey = env.Publishable_key;
+                        // 4. Insert into Supabase
+        const supabaseUrl = env.SUPABASE_URL || env.supabase_url;
+        
+        // This checks both lowercase and uppercase variations to be completely safe
+        const supabaseKey = env.publishable_key || env.PUBLISHABLE_KEY || env.SUPABASE_ANON_KEY;
 
-                if (!supabaseUrl || !supabaseKey) {
-                    console.error('Missing Supabase environment variables');
-                    return new Response(JSON.stringify({ error: 'Server configuration error' }), {
-                        status: 500,
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*'
-                        }
-                    });
+        // DIAGNOSTIC ERROR HANDLER: This tells us exactly what Cloudflare is failing to read
+        if (!supabaseUrl || !supabaseKey) {
+            let missingDetails = [];
+            if (!supabaseUrl) missingDetails.push("SUPABASE_URL missing");
+            if (!supabaseKey) missingDetails.push("Supabase API key missing");
+            
+            console.error(`Configuration Error: ${missingDetails.join(' & ')}`);
+            
+            return new Response(JSON.stringify({ 
+                error: `Server configuration error: ${missingDetails.join(' and ')}. Please check your Cloudflare Dashboard variable spelling.` 
+            }), {
+                status: 500,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 }
+            });
+        }
+
+                // Insert into Supabase
+                //const supabaseUrl = env.SUPABASE_URL;
+                //const supabaseKey = env.Publishable_key;
+
+                //if (!supabaseUrl || !supabaseKey) {
+                   // console.error('Missing Supabase environment variables');
+                    //return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+                      //  status: 500,
+                      //  headers: { 
+                      //      'Content-Type': 'application/json',
+                      //      'Access-Control-Allow-Origin': '*'
+                    //    }
+                  //  });
+              //  }
 
                 const response = await fetch(`${supabaseUrl}/rest/v1/discovery_leads`, {
                     method: 'POST',
