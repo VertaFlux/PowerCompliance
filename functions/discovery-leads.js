@@ -62,7 +62,7 @@ export default {
 
                 // Insert into Supabase
                 const supabaseUrl = env.SUPABASE_URL;
-                const supabaseKey = env.SUPABASE_ANON_KEY;
+                const supabaseKey = env.Publishable_key;
 
                 if (!supabaseUrl || !supabaseKey) {
                     console.error('Missing Supabase environment variables');
