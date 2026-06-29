@@ -1,11 +1,9 @@
 name = "powercompliance"
 compatibility_date = "2026-06-18"
-main = "discovery-leads.js" # <--- Links your backend logic file
+main = "functions/discovery-leads.js" # <--- Links your backend logic file
 
 [assets]
 directory = "."
 binding = "ASSETS" # <--- Allows your script to fall back to your static HTML pages
-
-
 
 
