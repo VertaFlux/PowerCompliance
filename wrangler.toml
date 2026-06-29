@@ -1,31 +1,11 @@
 name = "powercompliance"
 compatibility_date = "2026-06-18"
+main = "discovery-leads.js" # <--- Links your backend logic file
 
 [assets]
 directory = "."
-
-[vars]
-ENVIRONMENT = "production"
+binding = "ASSETS" # <--- Allows your script to fall back to your static HTML pages
 
 
 
 
-# Cloudflare Pages configuration
-# For Cloudflare Pages Functions
-
-#name = "power-compliance"
-#type = "javascript"
-
-# Environment variables for production
-#[env.production]
-#vars = { ENVIRONMENT = "production" }
-
-# Build configuration
-#[build]
-#command = "npm run build"
-#destination = "dist"
-
-# Bindings and routes
-#[[routes]]
-#pattern = "/api/discovery-leads"
-#zone_id = ""
