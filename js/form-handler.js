@@ -72,9 +72,20 @@ async function handleFormSubmit(event) {
                 messageDiv.style.display = 'none';
             }, 5000);
         } else {
-            // Read error message from backend if available
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Form submission failed');
+            // Read response as plain text first instead of jumping straight to JSON
+            const errorText = await response.text();
+            let errorMessage = 'Form submission failed';
+            
+            try {
+                // Try parsing it as JSON if the server returned a JSON error payload
+                const errorData = JSON.parse(errorText);
+                errorMessage = errorData.error || errorMessage;
+            } catch (_) {
+                // Fallback message if the server sends back an HTML page (like a 404 or 500 error)
+                errorMessage = `Server Error (${response.status}): Unexpected response format from server.`;
+            }
+            
+            throw new Error(errorMessage);
         }
     } catch (error) {
         // Error - show message
