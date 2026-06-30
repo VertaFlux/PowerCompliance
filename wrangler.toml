@@ -6,5 +6,5 @@ main = "functions/discovery-leads.js" # <--- Links your backend logic file
 directory = "."
 binding = "ASSETS" # <--- Allows your script to fall back to your static HTML pages
 
-# Trigger fresh deployment with new environment variables
+keep_vars = true
 
