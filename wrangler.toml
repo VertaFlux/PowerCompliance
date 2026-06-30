@@ -8,3 +8,6 @@ binding = "ASSETS" # <--- Allows your script to fall back to your static HTML pa
 
 keep_vars = true
 
+[vars]
+SUPABASE_URL = "https://pujspwlduvtbdlwmkcdm.supabase.co"
+SUPABASE_ANON_KEY = "sb_publishable_36vOoMTmP0qGfHz1VbCvAg_SEOnxETx"
